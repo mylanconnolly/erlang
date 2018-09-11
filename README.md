@@ -40,7 +40,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "Error reading string %s\n", readErr.Error())
 			os.Exit(1)
 		}
-		if err := p.WriteMsg([]byte("Responding to " + string(body))); err != nil {
+		if _, err := p.Write([]byte("Responding to " + string(body))); err != nil {
 			fmt.Fprintf(os.Stderr, "Error writing string %s\n", err.Error())
 			os.Exit(1)
 		}
