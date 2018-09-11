@@ -41,7 +41,7 @@ func main() {
 			os.Exit(1)
 		}
 		if err := p.WriteMsg([]byte("Responding to " + string(body))); err != nil {
-			fmt.Fprintf(os.Stderr, "Error wririting strign %s\n", err.Error())
+			fmt.Fprintf(os.Stderr, "Error writing string %s\n", err.Error())
 			os.Exit(1)
 		}
 		if readErr == io.EOF {
