@@ -32,8 +32,7 @@ func (p Port) ReadMsg() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	size := decodeSize(sizeHeader)
-	body := make([]byte, size)
+	body := make([]byte, decodeSize(sizeHeader))
 	_, err = p.r.Read(body)
 
 	return body, err
@@ -44,8 +43,7 @@ func (p Port) ReadMsg() ([]byte, error) {
 // Incidentally, this also implements the io.Writer interface.
 func (p Port) Write(msg []byte) (n int, err error) {
 	length := len(msg)
-	sizeHeader := encodeSize(length)
-	body := append(sizeHeader, msg...)
+	body := append(encodeSize(length), msg...)
 
 	return p.w.Write(body)
 }
