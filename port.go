@@ -12,13 +12,13 @@ import (
 // Port implements io.Writer, but not io.Reader (because we probably would not
 // know the length of the message we are reading beforehand).
 type Port struct {
-	reader io.Reader
-	writer io.Writer
+	r io.Reader
+	w io.Writer
 }
 
 // NewPort is used to return a new port with the given reader
 func NewPort() *Port {
-	return &Port{reader: os.Stdin, writer: os.Stdout}
+	return &Port{r: os.Stdin, w: os.Stdout}
 }
 
 // ReadMsg is a function used to test reading the input from the given reader.
@@ -26,14 +26,14 @@ func NewPort() *Port {
 // can use that length to determine how big the body is, and read just that.
 func (p Port) ReadMsg() ([]byte, error) {
 	sizeHeader := make([]byte, 2)
-	_, err := p.reader.Read(sizeHeader)
+	_, err := p.r.Read(sizeHeader)
 
 	if err != nil {
 		return nil, err
 	}
 	size := decodeSize(sizeHeader)
 	body := make([]byte, size)
-	_, err = p.reader.Read(body)
+	_, err = p.r.Read(body)
 
 	return body, err
 }
@@ -46,7 +46,7 @@ func (p Port) Write(msg []byte) (n int, err error) {
 	sizeHeader := encodeSize(length)
 	body := append(sizeHeader, msg...)
 
-	return p.writer.Write(body)
+	return p.w.Write(body)
 }
 
 func decodeSize(header []byte) int {

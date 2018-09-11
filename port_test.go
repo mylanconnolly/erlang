@@ -12,10 +12,10 @@ func TestNewPort(t *testing.T) {
 	if p == nil {
 		t.Error("NewPort() => nil, wanted Port")
 	}
-	if p.reader == nil {
+	if p.r == nil {
 		t.Error("Port reader is nil")
 	}
-	if p.writer == nil {
+	if p.w == nil {
 		t.Error("Port writer is nil")
 	}
 }
@@ -55,7 +55,7 @@ func TestReadMsg(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			buf := &bytes.Buffer{}
-			p := Port{reader: buf, writer: buf}
+			p := Port{r: buf, w: buf}
 
 			buf.Write(tt.msg)
 
@@ -88,7 +88,7 @@ func TestWrite(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			buf := &bytes.Buffer{}
-			p := Port{reader: buf, writer: buf}
+			p := Port{r: buf, w: buf}
 			wantLength := len(tt.msg) + 2
 			length, err := p.Write(tt.msg)
 
