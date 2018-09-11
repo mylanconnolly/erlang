@@ -16,7 +16,8 @@ type Port struct {
 	w io.Writer
 }
 
-// NewPort is used to return a new port with the given reader
+// NewPort is used to return a new port with the given reader. It uses
+// `os.Stdin` and `os.Stdout`, since that is how Erlang ports communicate.
 func NewPort() *Port {
 	return &Port{r: os.Stdin, w: os.Stdout}
 }
