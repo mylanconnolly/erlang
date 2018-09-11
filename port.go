@@ -50,6 +50,9 @@ func (p Port) Write(msg []byte) (n int, err error) {
 }
 
 func decodeSize(header []byte) int {
+	if len(header) < 2 {
+		return 0
+	}
 	return int(header[0])<<8 | int(header[1])
 }
 
