@@ -31,20 +31,20 @@ import (
 )
 
 func main() {
-  p := erlang.NewPort()
+	p := erlang.NewPort()
 
-  for {
-    body, readErr := p.ReadMsg()
+	for {
+		body, readErr := p.ReadMsg()
 
-    if readErr != nil && readErr != io.EOF {
+		if readErr != nil && readErr != io.EOF {
 			fmt.Fprintf(os.Stderr, "Error reading string %s\n", readErr.Error())
 			os.Exit(1)
-    }
-    if err := p.WriteMsg([]byte("Responding to " + string(body))); err != nil {
+		}
+		if err := p.WriteMsg([]byte("Responding to " + string(body))); err != nil {
 			fmt.Fprintf(os.Stderr, "Error wririting strign %s\n", err.Error())
 			os.Exit(1)
-    }
-    if readErr == io.EOF {
+		}
+		if readErr == io.EOF {
 			break
 		}
   }
