@@ -47,7 +47,7 @@ func main() {
 		if readErr == io.EOF {
 			break
 		}
-  }
+	}
 }
 ```
 
