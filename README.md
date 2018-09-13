@@ -34,16 +34,21 @@ func main() {
 	p := erlang.NewPort()
 
 	for {
+		// Receive a message from stdin, as well as any error that may be encountered.
 		body, readErr := p.ReadMsg()
 
+		// Check if there's an actual error (not EOF, we shouldn't handle that yet)
 		if readErr != nil && readErr != io.EOF {
 			fmt.Fprintf(os.Stderr, "Error reading string %s\n", readErr.Error())
 			os.Exit(1)
 		}
+		// Do whatever you want to do with the message from stdin
 		if _, err := p.Write([]byte("Responding to " + string(body))); err != nil {
 			fmt.Fprintf(os.Stderr, "Error writing string %s\n", err.Error())
 			os.Exit(1)
 		}
+		// If we encountered an EOF, let's break the loop, since the program is
+		// done.
 		if readErr == io.EOF {
 			break
 		}
